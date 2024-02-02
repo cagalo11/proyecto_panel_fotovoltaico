@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculation Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculation Result</h1>
+        <p class="result">The calculated Potencia is: <strong>{{ potencia }}</strong></p>
+        <div class="plot-container">
+            <img src="data:image/png;base64,{{ plot_url }}" alt="Potencia Plot">
+        </div>
+        <a href="/" class="button">Try Another Calculation</a>
+    </div>
+</body>
+</html>
