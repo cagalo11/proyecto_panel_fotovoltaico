@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() { 
     // Initialize the map on the "mapid" div with a given center and zoom
     var mymap = L.map('mapid').setView([51.505, -0.09], 2); // You can adjust the initial view
 
