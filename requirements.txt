@@ -1,2 +1,6 @@
 Flask
 matplotlib
+pandas
+scipy
+io
+jsonify
