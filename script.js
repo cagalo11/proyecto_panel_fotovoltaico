@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() { 
     // Initialize the map on the "mapid" div with a given center and zoom
-    var mymap = L.map('mapid').setView([51.505, -0.09], 2); // You can adjust the initial view
+    var mymap = L.map('mapid').setView([-74.083, 4.5921], 2); // You can adjust the initial view
 
     // Load and display tile layers on the map (default OpenStreetMap)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
