@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geographic Data Visualization</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        #mapid { height: 400px; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select Location on Map</h1>
+        <div id="mapid"></div>
+        <div id="plotContainer"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+    var mymap = L.map('mapid').setView([4.6586, -74.09], 5); // Adjust the initial view to your preference
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+    }).addTo(mymap);
+
+    var singleMarker; // Initialize variable to hold the marker outside of the click event
+
+    function onMapClick(e) {
+        var lat = e.latlng.lat;
+        var lng = e.latlng.lng;
+
+        // Check if a marker already exists
+        if (singleMarker) {
+            // Update the marker's position
+            singleMarker.setLatLng(e.latlng);
+        } else {
+            // Create a new marker and add it to the map
+            singleMarker = L.marker(e.latlng).addTo(mymap);
+        }
+
+        // Bind popup or update its content and open it
+        singleMarker.bindPopup("<b>Selected Location</b><br>Latitude: " + lat + "<br>Longitude: " + lng).openPopup();
+
+        if (singleMarker) {
+    		singleMarker.setLatLng(e.latlng);
+    		fetch('/location_lookup', {
+        	method: 'POST',
+        	headers: {
+            	'Content-Type': 'application/json',
+        	},
+        	body: JSON.stringify({
+            		lat: lat,
+            		lng: lng,
+        	}),
+    	})
+    .then(response => response.json())
+.then(data => {
+    // Process response data
+    console.log('Success:', data);
+
+    // Assuming 'data.plot' contains the base64-encoded plot image
+    var plotContainer = document.getElementById('plotContainer');
+    plotContainer.innerHTML = `<img src="data:image/png;base64,${data.url_plot}" alt="Plot Image">`;
+
+    // Here you can also update other parts of the page based on the response
+    // For example, updating a marker popup, displaying data values, etc.
+})
+.catch(error => console.error('Error:', error));;
+}
+    }
+
+    // Attach the click event handler to the map
+    mymap.on('click', onMapClick);
+</script>
+</body>
+</html>
