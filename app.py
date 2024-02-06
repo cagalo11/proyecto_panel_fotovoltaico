@@ -56,7 +56,7 @@ def location_lookup():
         record = result.iloc[0]
         if record['left'] <= lon <= record['right'] and record['bottom'] <= lat <= record['top']:
             Modelo = PVModel(4,3)
-            resultados, Vmpp, Impp, P_max = Modelo.modelo_pv(G=record['ghi'], T=273.15+record['temperature'])
+            resultados, Vmpp, Impp, P_max = Modelo.modelo_pv(G=record['ghi'] * 365, T=record['temperature'] + 273.15)
             
             fig, axs = plt.subplots(2, 1, figsize=(10, 10))
 

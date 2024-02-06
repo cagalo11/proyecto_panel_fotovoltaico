@@ -14,7 +14,7 @@ class PVModel:
 
     def __init__(self, num_panels_series, num_panels_parallel):
         self.R_sh = 545.82  # Resistencia en paralelo
-        self.k_i = 0.037  # Coeficiente de temperatura
+        self.k_i = 0.00037  # Coeficiente de temperatura
         self.T_n = 298  # Temperatura de referencia
         self.q = 1.60217646e-19  # Carga del electrón
         self.n = 1.0  # Factor de idealidad
